@@ -56,19 +56,81 @@ Make a fork of this repo on your own GitHub account and then clone it down to yo
 
 Please write your responses to the questions in the instructions here. Please indicate any tradeoffs you made.
 
-1. Output:
+<br />
 
-Answers:
+### 1. Top ten customers:
 
-2. Output:
+```
+  [ '65', 30846 ],
+  [ '21', 29686 ],
+  [ '100', 28979 ],
+  [ '64', 26915 ],
+  [ '41', 26807 ],
+  [ '99', 26778 ],
+  [ '47', 26326 ],
+  [ '72', 24977 ],
+  [ '98', 24595 ],
+  [ '73', 24422 ]
+```
 
-Answers:
+I'm first using an object (dictionary) to add each amount to the customer's total with minimal complexity.
 
-3. Output:
+Then sorting the aggregated data. JavaScript [].sort is O(n log n) complexity which is better than doing a binary search every time we add a new amount to the customer's total. This is looping over the data just once to sort everything at the very end.
 
-Answers:
+The only part to worry about scale is that [].sort() operation, but that is said to be pretty efficient.
+
+<br />
+
+### 2. Customers by cohort
+
+```
+  '2020-01': [
+    10, 11, 13, 14, 15, 17, 20, 21, 23,
+    27, 28, 30, 34, 39, 40, 42, 44, 51,
+    65, 70, 72, 73, 78, 80, 83, 84, 89,
+    92, 96, 98, 99
+  ],
+  '2020-02': [
+     3,  8, 24, 32, 33, 37,
+    41, 45, 50, 56, 59, 61,
+    67, 81, 82, 86
+  ],
+  '2020-03': [
+     4,  5, 12, 19, 25,
+    47, 48, 55, 77, 90,
+    93, 94
+  ],
+```
+
+O(n) + loop once for each year and month. So it scales very well!
+
+There is a one line commented out [].sort() because the current invoice data already seems to be sorted by customer id. So that would add extra complexity. I don't really know how to avoid that. Would have to think about it more.
+
+<br />
+
+### 3. Revenue by cohort
+
+```
+│ (index) │ 2020-01 │ 2020-02 │ 2020-03 │ 2020-04
+| 2020-01 │  50100  │  14299  │  16225  │  24260
+│ 2020-02 │    0    │  27840  │  10013  │  4522
+│ 2020-03 │    0    │    0    │  24190  │    0
+│ 2020-04 │    0    │    0    │    0    │  17133
+```
+
+This took me too long. BUT I think it is efficient. I'm only looping over the invoice data once (O(n)), so that's pretty awesome! I am looping over each year/month and then for each of those each year/month AGAIN. It looks ugly. That's what took me so long. I was trying to avoid this, fell into that trap. But no reason to avoid that I realized because there are not that many years/months, so it doesn't take long at all to loop over them.
+
+This scales as (O(n)) plus a fixed number of loops for the number of years and months. So it scales very well.
+
+This does not depend on whether the invoice data is sorted.
+
+I honestly need practice with this sort of thing. But with practice should be able to complete these types of things much faster in the future.
+
+<br />
 
 ## Submitting
+
+> Videos uploaded here: https://techytools.notion.site/TopLine-6ef32fbc894c44c899eeaf0959f62388
 
 To submit your code, send us a link to your repo.
 Once we confirm that we've downloaded your work, please delete the repo you created so future candidates don't accidentally find your solution.
